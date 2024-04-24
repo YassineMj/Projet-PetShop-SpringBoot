@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entities.AchatPetEntity;
 
-public interface AchatPetRepository extends JpaRepository<AchatPetEntity, Long>{
+public interface AchatPetRepository extends JpaRepository<AchatPetEntity, Long> {
 
 }

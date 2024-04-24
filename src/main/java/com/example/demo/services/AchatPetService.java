@@ -19,15 +19,17 @@ public class AchatPetService {
 	UserRepository userRepository;
 	@Autowired
 	PetRepository petRepository;
-	
+
 	public void achatPet(AchatPetRequest achatPetRequest) {
-		PetEntity pet = petRepository.findByIdPet(achatPetRequest.getIdPet()).orElseThrow(()->new IllegalArgumentException("Pet non trouvé"));
-		UserEntity user = userRepository.findByIdUser(achatPetRequest.getIdUser()).orElseThrow(()->new IllegalArgumentException("Utilisateur non trouvé"));
+		PetEntity pet = petRepository.findByIdPet(achatPetRequest.getIdPet())
+				.orElseThrow(() -> new IllegalArgumentException("Pet non trouvé"));
+		UserEntity user = userRepository.findByIdUser(achatPetRequest.getIdUser())
+				.orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé"));
 		AchatPetEntity achatPetEntity = new AchatPetEntity();
 		achatPetEntity.setUser(user);
 		achatPetEntity.setPet(pet);
 		achatPetEntity.setQuantitePet(achatPetRequest.getQuantitePet());
 		achatPetRepository.save(achatPetEntity);
-		
+
 	}
 }

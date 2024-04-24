@@ -17,13 +17,13 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CategorieEntity {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="idCategorie")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idCategorie")
 	private Long idCategorie;
-	
-	@Column(name ="nomCategorie")
+
+	@Column(name = "nomCategorie")
 	private String nomCategorie;
 
 }

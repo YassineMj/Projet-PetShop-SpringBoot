@@ -13,16 +13,19 @@ public class ProduitService {
 
 	@Autowired
 	ProduitRepository produitRepository;
-	
-	public List<ProduitEntity> getAllProduits(){
+
+	public List<ProduitEntity> getAllProduits() {
 		return produitRepository.findAll();
 	}
+
 	public ProduitEntity getNewProduct() {
 		return produitRepository.findFirstByCategorieNomCategorieOrderByIdProduitDesc("produits");
 	}
+
 	public List<ProduitEntity> getThreeLastetProducts() {
 		return produitRepository.findTop3ByCategorieNomCategorieOrderByIdProduitDesc("produits");
 	}
+
 	public Long getCountProducts() {
 		return produitRepository.countByCategorieNomCategorie("produits");
 	}

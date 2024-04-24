@@ -1,11 +1,10 @@
 package com.example.demo.entities;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 @Entity
 @NoArgsConstructor
@@ -13,33 +12,32 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class PetEntity {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name ="idPet")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idPet")
 	private Long idPet;
-	
-	@Column(name ="nomPet")
+
+	@Column(name = "nomPet")
 	private String nomPet;
-	
-	@Column(name ="descriptionPet")
+
+	@Column(name = "descriptionPet")
 	private String descriptionPet;
-	
-	@Column(name ="prixPet")
+
+	@Column(name = "prixPet")
 	private Long prixPet;
-	
-	@Column(name ="special")
+
+	@Column(name = "special")
 	private boolean special;
-	
-	@Column(name ="imagePet")
+
+	@Column(name = "imagePet")
 	private String imagePet;
-	
-	@Column(name ="promotion")
+
+	@Column(name = "promotion")
 	private boolean promotion;
-	
+
 	@ManyToOne
-	    @JoinColumn(name = "fk_idCategorie")
+	@JoinColumn(name = "fk_idCategorie")
 	private CategorieEntity categorie;
-	
 
 }

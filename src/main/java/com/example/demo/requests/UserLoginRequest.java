@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class UserLoginRequest {
-	
+
 	private String userEmail;
 	private String userMotDePasse;
 }

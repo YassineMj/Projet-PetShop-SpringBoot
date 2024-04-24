@@ -15,28 +15,28 @@ import com.example.demo.services.ProduitService;
 @RestController
 @RequestMapping("Petshop/api/produit")
 public class ProduitController {
-	
+
 	@Autowired
 	ProduitService produitService;
-	
+
 	@GetMapping("/get-all-product")
-	public List<ProduitEntity> getAllProdocuts(){
+	public List<ProduitEntity> getAllProdocuts() {
 		return produitService.getAllProduits();
 	}
-	
+
 	@GetMapping("get-new-product")
 	public ProduitEntity getNewProduct() {
 		return produitService.getNewProduct();
 	}
-	
+
 	@GetMapping("get-Threelastet-products")
 	public List<ProduitEntity> getThreeLastet() {
 		return produitService.getThreeLastetProducts();
 	}
-	
+
 	@GetMapping("get-count-products")
 	public Long getCountProducts() {
-		long countProduct= produitService.getCountProducts();
+		long countProduct = produitService.getCountProducts();
 		return countProduct;
 	}
 
