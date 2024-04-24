@@ -6,14 +6,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
-	
+
 	@Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/Petshop/api/**")
-                .allowedOrigins("http://localhost:4200")
-                .allowedMethods("*")
-                .allowCredentials(true)
-                .allowedHeaders("*"); // Autoriser tous les en-têtes pour les requêtes OPTIONS
-    }
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/Petshop/api/**").allowedOrigins("http://localhost:4200").allowedMethods("*")
+				.allowCredentials(true).allowedHeaders("*"); // Autoriser tous les en-têtes pour les requêtes OPTIONS
+	}
 
 }

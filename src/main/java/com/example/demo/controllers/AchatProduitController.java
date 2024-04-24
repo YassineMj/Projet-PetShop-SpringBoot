@@ -20,15 +20,14 @@ public class AchatProduitController {
 
 	@Autowired
 	AchatProduitService achatProduitService;
-	
+
 	@PostMapping("/achat-produit")
-	public ResponseEntity<String> achatProduit(@RequestBody AchatProduitRequest achatPorduitRequest){
+	public ResponseEntity<String> achatProduit(@RequestBody AchatProduitRequest achatPorduitRequest) {
 		try {
 			achatProduitService.achatProduit(achatPorduitRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
-		}
-		catch(IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" +e.getMessage());
+			return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" + e.getMessage());
 		}
 	}
 }

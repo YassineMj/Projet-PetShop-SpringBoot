@@ -17,18 +17,17 @@ import com.example.demo.services.AchatPetService;
 @RestController
 @RequestMapping("Petshop/api/achatpet")
 public class AchatPetController {
-	
+
 	@Autowired
 	AchatPetService achatPetService;
 
 	@PostMapping("/achat-pet")
-	public ResponseEntity<String> achatPet(@RequestBody AchatPetRequest achatPetRequest){
+	public ResponseEntity<String> achatPet(@RequestBody AchatPetRequest achatPetRequest) {
 		try {
 			achatPetService.achatPet(achatPetRequest);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
-		}
-		catch(IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" +e.getMessage());
+			return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" + e.getMessage());
 		}
 	}
 }

@@ -12,10 +12,10 @@ import com.example.demo.requests.UserRequest;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	public void saveUser(UserRequest userRequest) {
 		UserEntity userEntity = new UserEntity();
 		userEntity.setUserNom(userRequest.getUserNom());
@@ -28,28 +28,31 @@ public class UserService {
 		userEntity.setUserCvc(userRequest.getUserCvc());
 		userEntity.setAnneeExpCart(userRequest.getAnneeExpCart());
 		userEntity.setMoisExpCart(userRequest.getMoisExpCart());
-		
+
 		userRepository.save(userEntity);
 	}
+
 	public boolean loginUser(UserLoginRequest userLoginRequest) {
 		UserEntity user = userRepository.findByUserEmail(userLoginRequest.getUserEmail());
-		if(user != null && user.getUserMotDePasse().equals(userLoginRequest.getUserMotDePasse())){
+		if (user != null && user.getUserMotDePasse().equals(userLoginRequest.getUserMotDePasse())) {
 			return true;
-			
+
 		}
-			return false;
+
+		return false;
 	}
+
 	public void updateUser(Long idUser, UserRequest userRequest) {
 		Optional<UserEntity> optionalUser = userRepository.findByIdUser(idUser);
-		  if(optionalUser.isPresent()) {
-			  UserEntity user = optionalUser.get();
-			  user.setUserNom(userRequest.getUserNom());
-			  user.setUserEmail(userRequest.getUserEmail());
-			  user.setUserAdresse(userRequest.getUserAdresse());
-			  user.setUserMotDePasse(userRequest.getUserMotDePasse());
-			  user.setUserEntreprise(userRequest.getUserEntreprise());
-			  userRepository.save(user);
+		if (optionalUser.isPresent()) {
+			UserEntity user = optionalUser.get();
+			user.setUserNom(userRequest.getUserNom());
+			user.setUserEmail(userRequest.getUserEmail());
+			user.setUserAdresse(userRequest.getUserAdresse());
+			user.setUserMotDePasse(userRequest.getUserMotDePasse());
+			user.setUserEntreprise(userRequest.getUserEntreprise());
+			userRepository.save(user);
 		}
-		  
+
 	}
 }

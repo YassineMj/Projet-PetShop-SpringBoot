@@ -21,8 +21,10 @@ public class AchatProduitService {
 	ProduitRepository produitRepository;
 
 	public void achatProduit(AchatProduitRequest achatProduitRequest) {
-		ProduitEntity produit = produitRepository.findByIdProduit(achatProduitRequest.getIdProduit()).orElseThrow(()->new IllegalArgumentException("Produit non trouvé"));
-		UserEntity user = userRepository.findByIdUser(achatProduitRequest.getIdUser()).orElseThrow(()->new IllegalArgumentException("user non trouvé"));
+		ProduitEntity produit = produitRepository.findByIdProduit(achatProduitRequest.getIdProduit())
+				.orElseThrow(() -> new IllegalArgumentException("Produit non trouvé"));
+		UserEntity user = userRepository.findByIdUser(achatProduitRequest.getIdUser())
+				.orElseThrow(() -> new IllegalArgumentException("user non trouvé"));
 		AchatProduitEntity achatProduitEntity = new AchatProduitEntity();
 		achatProduitEntity.setUser(user);
 		achatProduitEntity.setProduit(produit);
@@ -30,5 +32,5 @@ public class AchatProduitService {
 		achatProduitRepository.save(achatProduitEntity);
 
 	}
-	
+
 }
