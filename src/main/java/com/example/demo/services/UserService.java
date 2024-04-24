@@ -32,27 +32,27 @@ public class UserService {
 		userRepository.save(userEntity);
 	}
 
-	public boolean loginUser(UserLoginRequest userLoginRequest) {
-		UserEntity user = userRepository.findByUserEmail(userLoginRequest.getUserEmail());
-		if (user != null && user.getUserMotDePasse().equals(userLoginRequest.getUserMotDePasse())) {
-			return true;
-
-		}
-
-		return false;
+	public UserEntity loginUser(UserLoginRequest userLoginRequest) {
+	    UserEntity user = userRepository.findByUserEmail(userLoginRequest.getUserEmail());
+	    if (user != null && user.getUserMotDePasse().equals(userLoginRequest.getUserMotDePasse())) {
+	        return user;
+	    }
+	    return null; // Authentification échouée
 	}
 
-	public void updateUser(Long idUser, UserRequest userRequest) {
-		Optional<UserEntity> optionalUser = userRepository.findByIdUser(idUser);
-		if (optionalUser.isPresent()) {
-			UserEntity user = optionalUser.get();
-			user.setUserNom(userRequest.getUserNom());
-			user.setUserEmail(userRequest.getUserEmail());
-			user.setUserAdresse(userRequest.getUserAdresse());
-			user.setUserMotDePasse(userRequest.getUserMotDePasse());
-			user.setUserEntreprise(userRequest.getUserEntreprise());
-			userRepository.save(user);
-		}
 
+	public UserEntity updateUser(Long idUser, UserRequest userRequest) {
+	    Optional<UserEntity> optionalUser = userRepository.findByIdUser(idUser);
+	    if (optionalUser.isPresent()) {
+	        UserEntity user = optionalUser.get();
+	        user.setUserNom(userRequest.getUserNom());
+	        user.setUserEmail(userRequest.getUserEmail());
+	        user.setUserAdresse(userRequest.getUserAdresse());
+	        user.setUserMotDePasse(userRequest.getUserMotDePasse());
+	        user.setUserEntreprise(userRequest.getUserEntreprise());
+	        return userRepository.save(user);
+	    }
+	    return null; // Gérer le cas où l'utilisateur n'est pas trouvé
 	}
+
 }
