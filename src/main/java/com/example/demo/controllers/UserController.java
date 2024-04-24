@@ -67,7 +67,7 @@ public class UserController {
 	    if (updatedUser != null) {
 	        return ResponseEntity.ok(updatedUser);
 	    } else {
-	        return ResponseEntity.notFound().build(); // Utilisateur non trouvé
+	        return ResponseEntity.notFound().build(); // Utilisateur non trouvé 
 	    }
 	}
 
