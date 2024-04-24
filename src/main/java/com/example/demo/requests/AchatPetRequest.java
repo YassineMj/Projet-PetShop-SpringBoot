@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class AchatPetRequest {
 	private Long idUser;
 	private Long idPet;
-	private String quantitePet;
+	private int quantitePet;
 }

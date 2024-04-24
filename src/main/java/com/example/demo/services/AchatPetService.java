@@ -20,7 +20,7 @@ public class AchatPetService {
 	@Autowired
 	PetRepository petRepository;
 
-	public void achatPet(AchatPetRequest achatPetRequest) {
+	public String achatPet(AchatPetRequest achatPetRequest) {
 		PetEntity pet = petRepository.findByIdPet(achatPetRequest.getIdPet())
 				.orElseThrow(() -> new IllegalArgumentException("Pet non trouvé"));
 		UserEntity user = userRepository.findByIdUser(achatPetRequest.getIdUser())
@@ -30,6 +30,6 @@ public class AchatPetService {
 		achatPetEntity.setPet(pet);
 		achatPetEntity.setQuantitePet(achatPetRequest.getQuantitePet());
 		achatPetRepository.save(achatPetEntity);
-
+		return "achat ajouté";
 	}
 }

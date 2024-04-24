@@ -1,5 +1,8 @@
 package com.example.demo.controllers;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -22,12 +25,14 @@ public class AchatPetController {
 	AchatPetService achatPetService;
 
 	@PostMapping("/achat-pet")
-	public ResponseEntity<String> achatPet(@RequestBody AchatPetRequest achatPetRequest) {
+	public ResponseEntity<Map<String, String>> achatPet(@RequestBody AchatPetRequest achatPetRequest) {
 		try {
 			achatPetService.achatPet(achatPetRequest);
-			return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(Collections.singletonMap("Message", "Achat de pet effectué avec succès."));
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap("Message", e.getMessage()));
 		}
 	}
 }

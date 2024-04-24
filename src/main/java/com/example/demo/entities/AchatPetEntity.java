@@ -26,6 +26,8 @@ public class AchatPetEntity {
 	private PetEntity pet;
 
 	@JoinColumn(name = "quantitePet")
-	private String quantitePet;
+	private int quantitePet;
+
+	private boolean statusAchatPet = true;
 
 }

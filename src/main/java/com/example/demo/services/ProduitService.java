@@ -18,9 +18,11 @@ public class ProduitService {
 		return produitRepository.findAll();
 	}
 
-	public ProduitEntity getNewProduct() {
-		return produitRepository.findFirstByCategorieNomCategorieOrderByIdProduitDesc("produits");
-	}
+	/*
+	 * public ProduitEntity getNewProduct() { return
+	 * produitRepository.findFirstByCategorieNomCategorieOrderByIdProduitDesc(
+	 * "produits"); }
+	 */
 
 	public List<ProduitEntity> getThreeLastetProducts() {
 		return produitRepository.findTop3ByCategorieNomCategorieOrderByIdProduitDesc("produits");
