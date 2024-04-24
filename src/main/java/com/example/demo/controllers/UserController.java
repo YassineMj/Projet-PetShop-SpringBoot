@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entities.UserEntity;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.requests.UserLoginRequest;
 import com.example.demo.requests.UserRequest;
@@ -50,18 +52,23 @@ public class UserController {
 	}
 
 	@PostMapping("/login-user")
-	public ResponseEntity<String> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
-		if (userService.loginUser(userLoginRequest)) {
-			return ResponseEntity.ok("authantification reussie! ");
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authantification echoué !!!!");
-		}
+	public ResponseEntity<Object> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
+	    UserEntity authenticatedUser = userService.loginUser(userLoginRequest);
+	    if (authenticatedUser != null) {
+	        return ResponseEntity.ok(authenticatedUser);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authentification echoué !!!!");
+	    }
 	}
 
 	@PutMapping("/update-user/{iduser}")
-	public ResponseEntity<String> updateUser(@PathVariable Long iduser, @RequestBody UserRequest userRequest) {
-		userService.updateUser(iduser, userRequest);
-		return ResponseEntity.ok("update reussie!");
-
+	public ResponseEntity<Object> updateUser(@PathVariable Long iduser, @RequestBody UserRequest userRequest) {
+	    UserEntity updatedUser = userService.updateUser(iduser, userRequest);
+	    if (updatedUser != null) {
+	        return ResponseEntity.ok(updatedUser);
+	    } else {
+	        return ResponseEntity.notFound().build(); // Utilisateur non trouvé
+	    }
 	}
+
 }
