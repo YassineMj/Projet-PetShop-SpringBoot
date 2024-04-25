@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class AchatProduitRequest {
 	private Long idUser;
 	private Long idProduit;
-	private String quantiteProduit;
+	private int quantiteProduit;
 }

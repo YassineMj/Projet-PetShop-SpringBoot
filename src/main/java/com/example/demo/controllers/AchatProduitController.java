@@ -1,9 +1,17 @@
 package com.example.demo.controllers;
 
+import java.util.Collections;
+
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +29,18 @@ public class AchatProduitController {
 	@Autowired
 	AchatProduitService achatProduitService;
 
-	@PostMapping("/achat-produit")
-	public ResponseEntity<String> achatProduit(@RequestBody AchatProduitRequest achatPorduitRequest) {
+	@PostMapping("/card-achat-produit")
+	public ResponseEntity<Map<String, String>> achatProduit(@RequestBody AchatProduitRequest achatPorduitRequest) {
 		try {
 			achatProduitService.achatProduit(achatPorduitRequest);
-			return ResponseEntity.status(HttpStatus.CREATED).body("Achat de pet effectué avec succès.");
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("error dans l'achat de pet" + e.getMessage());
+			return ResponseEntity.status(HttpStatus.CREATED)
+					.body(Collections.singletonMap("Message", "Achat de produit effectué avec succès."));
+		}
+
+		catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+					.body(Collections.singletonMap("Message", e.getMessage()));
 		}
 	}
+
 }

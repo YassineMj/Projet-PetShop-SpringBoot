@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.Collections;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entities.PetEntity;
 import com.example.demo.requests.AchatPetRequest;
 import com.example.demo.services.AchatPetService;
 
@@ -38,9 +40,25 @@ public class AchatPetController {
 					.body(Collections.singletonMap("Message", e.getMessage()));
 		}
 	}
-	
-	@GetMapping("get-card-pet/{idUser}")
-	public ResponseEntity<?> getCartByIdUser(@PathVariable Long idUser) {
-        return achatPetService.getCartPetByIdUser(idUser);
-    }
+
+	@GetMapping("/most-popular-pet-chat")
+	public ResponseEntity<?> mostPopularPetChat() {
+		String mostPopularPet = achatPetService.mostPopularChat();
+		if (mostPopularPet != null) {
+			return ResponseEntity.ok(mostPopularPet);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	@GetMapping("/most-popular-pet-chien")
+	public ResponseEntity<?> mostPopularPetChien() {
+		String mostPopularPet = achatPetService.mostPopularChien();
+		if (mostPopularPet != null) {
+			return ResponseEntity.ok(mostPopularPet);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 }

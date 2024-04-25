@@ -27,6 +27,9 @@ public class AchatProduitEntity {
 	private ProduitEntity Produit;
 
 	@JoinColumn(name = "quantiteProduit")
-	private String quantiteProduit;
+	private int quantiteProduit;
+
+	@Column(name = "statusAchatProduit")
+	private boolean statusAchatProduit = true;
 
 }
