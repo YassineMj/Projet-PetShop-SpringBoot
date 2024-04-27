@@ -1,12 +1,14 @@
 package com.example.demo.controllers;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -62,5 +64,17 @@ public class UserController {
 	public ResponseEntity<String> updateUser(@PathVariable Long iduser, @RequestBody UserRequest userRequest) {
 		userService.updateUser(iduser, userRequest); // Délégation de la mise à jour de l'utilisateur au service UserService
 		return ResponseEntity.ok("update reussie!"); // Requête traitée avec succès - code 200 (OK) et message de confirmation
+	}
+	@GetMapping("get-count-users") // Requête GET pour récupérer le nombre de chiens
+	public ResponseEntity<Map<String, Long>> getCountUsers() {
+		// Appeler le service pour obtenir le nombre de chiens
+		long countUsers = userService.getCountUser();
+
+		// Créer un map pour stocker le résultat
+		Map<String, Long> resultMap = new HashMap<>();
+		resultMap.put("countUsers", countUsers);
+
+		// Retourner le résultat dans ResponseEntity
+		return ResponseEntity.ok(resultMap); // Requête traitée avec succès - code 200 (OK) et résultat dans un Map
 	}
 }
