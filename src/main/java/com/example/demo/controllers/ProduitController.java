@@ -1,6 +1,7 @@
 package com.example.demo.controllers;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,30 +15,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entities.ProduitEntity;
 import com.example.demo.services.ProduitService;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RestController
-@RequestMapping("Petshop/api/produit")
+@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@RestController // Indique que cette classe est un contrôleur REST
+@RequestMapping("Petshop/api/produit") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class ProduitController {
 
 	@Autowired
-	ProduitService produitService;
+	ProduitService produitService; // Injection de dépendance du service ProduitService
 
-	@GetMapping("/get-all-products")
+	@GetMapping("/get-all-products") // Requête GET pour récupérer tous les produits
 	public List<ProduitEntity> getAllProdocuts() {
-		return produitService.getAllProduits();
+		return produitService.getAllProduits(); // Délégation de la récupération de tous les produits au service ProduitService
 	}
 
-	/*
-	 * @GetMapping("get-new-product") public ProduitEntity getNewProduct() { return
-	 * produitService.getNewProduct(); }
-	 */
 
-	@GetMapping("get-Threelastet-products")
+	@GetMapping("get-Threelatest-products") // Requête GET pour récupérer les 3 derniers produits 
 	public List<ProduitEntity> getThreeLastet() {
-		return produitService.getThreeLastetProducts();
+		return produitService.getThreeLastetProducts(); // Délégation de la récupération des 3 derniers produits au service ProduitService
 	}
 
-	@GetMapping("get-count-products")
+	@GetMapping("get-count-products") // Requête GET pour récupérer le nombre de produits
 	public ResponseEntity<Map<String, Long>> getCountProducts() {
 		// Appeler le service pour obtenir le nombre de produits
 		long countProducts = produitService.getCountProducts();
@@ -47,7 +44,7 @@ public class ProduitController {
 		resultMap.put("countProducts", countProducts);
 
 		// Retourner le résultat dans ResponseEntity
-		return ResponseEntity.ok(resultMap);
+		return ResponseEntity.ok(resultMap); // Requête traitée avec succès - code 200 (OK) et résultat dans un Map
 	}
 
 }

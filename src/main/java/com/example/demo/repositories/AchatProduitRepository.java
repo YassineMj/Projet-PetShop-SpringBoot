@@ -15,5 +15,13 @@ public interface AchatProduitRepository extends JpaRepository<AchatProduitEntity
 			+ "WHERE ap.fk_id_user = :idUser AND ap.status_achat_produit = true "
 			+ "GROUP BY ap.fk_id_produit", nativeQuery = true)
 	List<String> getCardProductByIdUser(@Param("idUser") Long idUser);
+	
+	@Query(value = "SELECT ap.fk_id_produit, p.nom_produit, c.nom_categorie, p.prix_produit, p.description_produit, p.image_produit "
+			+ "FROM achat_produit_entity ap " + "INNER JOIN produit_entity p ON ap.fk_id_produit = p.id_produit "
+			+ "INNER JOIN categorie_entity c ON p.fk_id_categorie = c.id_categorie "
+			+ "WHERE c.nom_categorie = :categorieproduit " + "GROUP BY ap.fk_id_produit "
+			+ "ORDER BY SUM(ap.quantite_produit) DESC LIMIT 1", nativeQuery = true)
+	String mostPopularProduct(@Param("categorieproduit") String categorieProduit);
+
 
 }

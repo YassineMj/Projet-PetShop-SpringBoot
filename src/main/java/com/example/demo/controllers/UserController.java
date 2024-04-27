@@ -20,48 +20,47 @@ import com.example.demo.services.UserService;
 
 import jakarta.websocket.server.PathParam;
 
-@CrossOrigin(origins = "http://localhost:4200")
-@RestController
-@RequestMapping("Petshop/api/user")
+@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@RestController // Indique que cette classe est un contrôleur REST
+@RequestMapping("Petshop/api/user") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class UserController {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
-	private UserRepository userRepository;
+	private UserService userService; // Injection de dépendance du service UserService
 
-	@PostMapping("/sign-up-user")
+	@Autowired
+	private UserRepository userRepository; // Injection de dépendance du repository UserRepository
+
+	@PostMapping("/sign-up-user") // Requête POST pour l'inscription d'un utilisateur
 	public ResponseEntity<Map<String, String>> singUpUser(@RequestBody UserRequest userRequest) {
 		try {
 			if (userRepository.existsByUserEmail(userRequest.getUserEmail()) == true) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-						.body(Collections.singletonMap("error", "L'e-mail existe déjà."));
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST) // Requête invalide
+						.body(Collections.singletonMap("error", "L'e-mail existe déjà.")); // Message d'erreur : email déjà utilisé
 			}
-			userService.saveUser(userRequest);
-			return ResponseEntity.status(HttpStatus.CREATED)
-					.body(Collections.singletonMap("message", "Utilisateur enregistré avec succès"));
+			userService.saveUser(userRequest); // Délégation de l'enregistrement de l'utilisateur au service UserService
+			return ResponseEntity.status(HttpStatus.CREATED) // Requête traitée avec succès - code 201 (CREATED)
+					.body(Collections.singletonMap("message", "Utilisateur enregistré avec succès")); // Message de confirmation d'enregistrement
 
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-					Collections.singletonMap("error", "Erreur lors de l'ajout du consultant : " + e.getMessage()));
-
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR) // Erreur interne du serveur
+					.body(Collections.singletonMap("error", "Erreur lors de l'ajout du consultant : " + e.getMessage())); // Message d'erreur détaillé
 		}
 
 	}
 
-	@PostMapping("/login-user")
+	@PostMapping("/login-user") // Requête POST pour la connexion d'un utilisateur
 	public ResponseEntity<String> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
 		if (userService.loginUser(userLoginRequest) != null) {
-			return ResponseEntity.ok("authantification reussie! ");
+			return ResponseEntity.ok("authantification reussie! "); // Requête traitée avec succès - code 200 (OK) et message de confirmation
 		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authantification echoué !!!!");
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authantification echoué !!!!"); // Non autorisé - code 401 (UNAUTHORIZED) et message d'erreur
 		}
 	}
 
-	@PutMapping("/update-user/{iduser}")
+	@PutMapping("/update-user/{iduser}") // Requête PUT pour la mise à jour d'un utilisateur
 	public ResponseEntity<String> updateUser(@PathVariable Long iduser, @RequestBody UserRequest userRequest) {
-		userService.updateUser(iduser, userRequest);
-		return ResponseEntity.ok("update reussie!");
-
+		userService.updateUser(iduser, userRequest); // Délégation de la mise à jour de l'utilisateur au service UserService
+		return ResponseEntity.ok("update reussie!"); // Requête traitée avec succès - code 200 (OK) et message de confirmation
 	}
 }

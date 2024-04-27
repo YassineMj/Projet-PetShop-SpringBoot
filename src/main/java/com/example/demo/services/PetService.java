@@ -14,10 +14,6 @@ public class PetService {
 	@Autowired
 	PetRepository petRepository;
 
-	/*
-	 * public List<PetEntity> getAllPets() { return petRepository.findAll(); }
-	 */
-
 	public List<PetEntity> getAllCats() {
 		return petRepository.findByCategorieNomCategorie("chats");
 	}
@@ -25,14 +21,6 @@ public class PetService {
 	public List<PetEntity> getAllDogs() {
 		return petRepository.findByCategorieNomCategorie("chiens");
 	}
-
-	/*
-	 * public PetEntity getNewCatPet() { return
-	 * petRepository.findFirstByCategorieNomCategorieOrderByIdPetDesc("chats"); }
-	 * 
-	 * public PetEntity getNewDogPet() { return
-	 * petRepository.findFirstByCategorieNomCategorieOrderByIdPetDesc("chiens"); }
-	 */
 
 	public List<PetEntity> getThreeLastetCatPet() {
 		return petRepository.findTop3ByCategorieNomCategorieOrderByIdPetDesc("chats");

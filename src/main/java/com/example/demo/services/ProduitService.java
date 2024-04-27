@@ -1,34 +1,29 @@
-package com.example.demo.services;
+package com.example.demo.services; // Indique le package dans lequel se trouve la classe ProduitService
 
-import java.util.List;
+import java.util.List; // Importe la classe List de la librairie java.util
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired; // Annotation Spring pour l'injection de dépendances
+import org.springframework.stereotype.Service; // Annotation Spring pour définir la classe comme un service
 
-import com.example.demo.entities.ProduitEntity;
+import com.example.demo.entities.ProduitEntity; // Importe la classe ProduitEntity
 import com.example.demo.repositories.ProduitRepository;
 
 @Service
-public class ProduitService {
+public class ProduitService { // Déclaration de la classe ProduitService
 
-	@Autowired
+	@Autowired // Injection de dépendance du repository ProduitRepository
 	ProduitRepository produitRepository;
 
-	public List<ProduitEntity> getAllProduits() {
-		return produitRepository.findAll();
+	public List<ProduitEntity> getAllProduits() { // Méthode pour récupérer tous les produits
+		return produitRepository.findAll(); // Retourne la liste de tous les produits
 	}
 
-	/*
-	 * public ProduitEntity getNewProduct() { return
-	 * produitRepository.findFirstByCategorieNomCategorieOrderByIdProduitDesc(
-	 * "produits"); }
-	 */
-
-	public List<ProduitEntity> getThreeLastetProducts() {
-		return produitRepository.findTop3ByCategorieNomCategorieOrderByIdProduitDesc("produits");
+	public List<ProduitEntity> getThreeLastetProducts() { // Méthode pour récupérer les 3 derniers produits
+		return produitRepository.findTop3ByCategorieNomCategorieOrderByIdProduitDesc("produits"); 
+		// Recherche les 3 premiers produits de la catégorie "produits" ordonnés par idProduit décroissant
 	}
 
-	public Long getCountProducts() {
-		return produitRepository.countByCategorieNomCategorie("produits");
+	public Long getCountProducts() { // Méthode pour compter le nombre de produits
+		return produitRepository.countByCategorieNomCategorie("produits"); // Compte le nombre de produits de la catégorie "produits"
 	}
 }

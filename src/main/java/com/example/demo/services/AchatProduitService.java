@@ -20,51 +20,57 @@ import com.example.demo.responses.CartResponse;
 
 @Service
 public class AchatProduitService {
+
 	@Autowired
-	UserRepository userRepository;
+	UserRepository userRepository; // Injection de dépendance du repository UserRepository
+
 	@Autowired
-	AchatProduitRepository achatProduitRepository;
+	AchatProduitRepository achatProduitRepository; // Injection de dépendance du repository AchatProduitRepository
+
 	@Autowired
-	ProduitRepository produitRepository;
+	ProduitRepository produitRepository; // Injection de dépendance du repository ProduitRepository
 
 	public String achatProduit(AchatProduitRequest achatProduitRequest) {
 		ProduitEntity produit = produitRepository.findByIdProduit(achatProduitRequest.getIdProduit())
-				.orElseThrow(() -> new IllegalArgumentException("Produit non trouvé"));
+				.orElseThrow(() -> new IllegalArgumentException("Produit non trouvé")); // Recherche le produit par son ID et lève une exception si introuvable
 		UserEntity user = userRepository.findByIdUser(achatProduitRequest.getIdUser())
-				.orElseThrow(() -> new IllegalArgumentException("user non trouvé"));
-		AchatProduitEntity achatProduitEntity = new AchatProduitEntity();
-		achatProduitEntity.setUser(user);
-		achatProduitEntity.setProduit(produit);
-		achatProduitEntity.setQuantiteProduit(achatProduitRequest.getQuantiteProduit());
-		achatProduitRepository.save(achatProduitEntity);
-		return "achatproduit reussie !";
+				.orElseThrow(() -> new IllegalArgumentException("Utilisateur non trouvé")); // Recherche l'utilisateur par son ID et lève une exception si introuvable
+		AchatProduitEntity achatProduitEntity = new AchatProduitEntity(); // Crée une nouvelle entité d'achat de produit
+		achatProduitEntity.setUser(user); // Associe l'utilisateur à l'achat
+		achatProduitEntity.setProduit(produit); // Associe le produit à l'achat
+		achatProduitEntity.setQuantiteProduit(achatProduitRequest.getQuantiteProduit()); // Définit la quantité du produit acheté
+		achatProduitRepository.save(achatProduitEntity); // Enregistre l'achat de produit en base de données
+		return "Achat effectué avec succès !"; // Message de confirmation d'achat réussi
 	}
 
 	public List<CartResponse> getCardProduitByIdUser(Long idUser) {
 
-		List<String> arrayProduit = achatProduitRepository.getCardProductByIdUser(idUser);
+		List<String> arrayProduit = achatProduitRepository.getCardProductByIdUser(idUser); // Récupère les produits du panier de l'utilisateur par son ID
 
-		List<CartResponse> cartResponse = new ArrayList<>();
+		List<CartResponse> cartResponse = new ArrayList<>(); // Crée une liste pour stocker les réponses du panier
 
 		for (int i = 0; i < arrayProduit.size(); i++) {
 
-			String[] parts = arrayProduit.get(i).split(",");
-			CartResponse cart = new CartResponse();
-			if (arrayProduit.equals("") == false) {
+			String[] parts = arrayProduit.get(i).split(","); // Sépare les informations du produit par des virgules
+			CartResponse cart = new CartResponse(); // Crée une nouvelle réponse de panier
+			if (!arrayProduit.equals("")) { // Vérifie si le panier n'est pas vide
 
-				cart.getDetailsMapCart().put("idProduit", parts[0]);
-				cart.getDetailsMapCart().put("imagePathProduit", parts[1]);
-				cart.getDetailsMapCart().put("nomProduit", parts[2]);
-				cart.getDetailsMapCart().put("prixProduit", parts[3]);
-				cart.getDetailsMapCart().put("quantiteProduit", parts[4]);
-				cart.getDetailsMapCart().put("sousPrixProduit", parts[5]);
+				cart.getDetailsMapCart().put("idProduit", parts[0]); // Ajoute l'identifiant du produit à la réponse
+				cart.getDetailsMapCart().put("imagePathProduit", parts[1]); // Ajoute le chemin de l'image du produit à la réponse
+				cart.getDetailsMapCart().put("nomProduit", parts[2]); // Ajoute le nom du produit à la réponse
+				cart.getDetailsMapCart().put("prixProduit", parts[3]); // Ajoute le prix du produit à la réponse
+				cart.getDetailsMapCart().put("quantiteProduit", parts[4]); // Ajoute la quantité du produit à la réponse
+				cart.getDetailsMapCart().put("sousPrixProduit", parts[5]); // Ajoute le sous-total du produit (quantité * prix) à la réponse
 			}
-			cartResponse.add(cart);
+			cartResponse.add(cart); // Ajoute la réponse de panier à la liste
 		}
-		if (cartResponse.size() > 0) {
-			return cartResponse;
+		if (cartResponse.size() > 0) { // Vérifie si la liste de réponses n'est pas vide
+			return cartResponse; // Renvoie la liste des réponses du panier
 		}
-		return null;
+		return null; // Renvoie null si le panier est vide
 	}
 
+	public String mostPopularProduct() {
+		return achatProduitRepository.mostPopularProduct("produits"); // Récupère le produit le plus populaire de la catégorie "produits"
+	}
 }

@@ -10,10 +10,6 @@ import com.example.demo.entities.ProduitEntity;
 
 public interface ProduitRepository extends JpaRepository<ProduitEntity, Long> {
 
-	/*
-	 * ProduitEntity findFirstByCategorieNomCategorieOrderByIdProduitDesc(String
-	 * nomCategorie);
-	 */
 	List<ProduitEntity> findTop3ByCategorieNomCategorieOrderByIdProduitDesc(String nomCategorie);
 
 	Long countByCategorieNomCategorie(String nomCategorie);

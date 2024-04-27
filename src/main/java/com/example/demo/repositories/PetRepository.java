@@ -9,11 +9,6 @@ import com.example.demo.entities.PetEntity;
 
 public interface PetRepository extends JpaRepository<PetEntity, Long> {
 
-	/*
-	 * PetEntity findFirstByCategorieNomCategorieOrderByIdPetDesc(String
-	 * nomCategorie);
-	 */
-
 	List<PetEntity> findTop3ByCategorieNomCategorieOrderByIdPetDesc(String nomCategorie);
 
 	List<PetEntity> findByCategorieNomCategorieAndSpecialTrue(String nomCategorie);
