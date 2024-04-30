@@ -33,9 +33,6 @@ public class UserEntity {
 	@Column(name = "userAdresse")
 	private String userAdresse;
 
-	@Column(name = "userEntreprise")
-	private String userEntreprise;
-
 	@Column(name = "userNumCart")
 	private String userNumCart;
 
@@ -47,5 +44,13 @@ public class UserEntity {
 
 	@Column(name = "anneeExpCart")
 	private String anneeExpCart;
+	
+	@Column(name = "sourceClientIdStripe")
+	private String sourceClientIdStripe;
+
+	
+	@Column(name = "sourceCartIdStrip")
+	private String sourceCartIdStrip;
+
 
 }

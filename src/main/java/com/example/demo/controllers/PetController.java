@@ -3,12 +3,14 @@ package com.example.demo.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +25,11 @@ public class PetController {
 	@Autowired
 	PetService petService; // Injection de dépendance du service PetService
 
+	@GetMapping("/get-pet/{idPet}")
+	public Optional<PetEntity> getPet(@PathVariable Long idPet) {
+		return petService.getPet(idPet); 
+	}
+	
 	@GetMapping("/get-all-cats") // Requête GET pour récupérer tous les chats
 	public List<PetEntity> getAllCats() {
 		return petService.getAllCats(); // Délégation de la récupération de tous les chats au service PetService

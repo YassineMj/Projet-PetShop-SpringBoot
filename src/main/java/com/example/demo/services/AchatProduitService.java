@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -72,5 +73,16 @@ public class AchatProduitService {
 
 	public String mostPopularProduct() {
 		return achatProduitRepository.mostPopularProduct("produits"); // Récupère le produit le plus populaire de la catégorie "produits"
+	}
+	
+	public void deleteAchatProduct(long idUser , long idProduit) {
+		Optional<UserEntity> userEntity = userRepository.findById(idUser);
+	    List<AchatProduitEntity> listAchat = achatProduitRepository.findByUser(userEntity);
+	    for (AchatProduitEntity ap : listAchat) {
+	    	if(ap.isStatusAchatProduit() && ap.getProduit().getIdProduit()==idProduit) {
+	    		achatProduitRepository.delete(ap);
+	    	}
+	        
+	    }
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,10 @@ public class PetService {
 
 	public Long getCountDogs() {
 		return petRepository.countByCategorieNomCategorie("chiens");
+	}
+
+	public Optional<PetEntity> getPet(Long idPet) {
+		
+		return petRepository.findById(idPet);
 	}
 }

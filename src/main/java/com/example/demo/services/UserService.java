@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entities.UserEntity;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.requests.UserLoginRequest;
-import com.example.demo.requests.UserRequest;
+import com.example.demo.requests.UserSinscrireRequest;
+import com.example.demo.requests.UserUpdateRequest;
 
 @Service
 public class UserService {
@@ -17,20 +18,21 @@ public class UserService {
 	UserRepository userRepository; // Injection de dépendance du repository UserRepository
 
 	// Méthode pour enregistrer un nouvel utilisateur
-	public void saveUser(UserRequest userRequest) {
+	public void saveUser(UserSinscrireRequest userSinscrireRequest) {
 		// Créer une nouvelle instance d'UserEntity avec les données de la demande
 		UserEntity userEntity = new UserEntity();
 		// Setter les valeurs de l'utilisateur avec les données de la demande
-		userEntity.setUserNom(userRequest.getUserNom());
-		userEntity.setUserMotDePasse(userRequest.getUserMotDePasse());
-		userEntity.setUserEmail(userRequest.getUserEmail());
-		userEntity.setUserAdresse(userRequest.getUserAdresse());
-		userEntity.setUserTelephone(userRequest.getUserTelephone());
-		userEntity.setUserEntreprise(userRequest.getUserEntreprise());
-		userEntity.setUserNumCart(userRequest.getUserNumCart());
-		userEntity.setUserCvc(userRequest.getUserCvc());
-		userEntity.setAnneeExpCart(userRequest.getAnneeExpCart());
-		userEntity.setMoisExpCart(userRequest.getMoisExpCart());
+		userEntity.setUserNom(userSinscrireRequest.getUserNom());
+		userEntity.setUserMotDePasse(userSinscrireRequest.getUserMotDePasse());
+		userEntity.setUserEmail(userSinscrireRequest.getUserEmail());
+		userEntity.setUserAdresse(userSinscrireRequest.getUserAdresse());
+		userEntity.setUserTelephone(userSinscrireRequest.getUserTelephone());
+		userEntity.setUserNumCart(userSinscrireRequest.getUserNumCart());
+		userEntity.setUserCvc(userSinscrireRequest.getUserCvc());
+		userEntity.setAnneeExpCart(userSinscrireRequest.getAnneeExpCart());
+		userEntity.setMoisExpCart(userSinscrireRequest.getMoisExpCart());
+		userEntity.setSourceClientIdStripe(userSinscrireRequest.getSourceClientIdStripe());
+		userEntity.setSourceCartIdStrip(userSinscrireRequest.getSourceCartIdStrip());
 		// Enregistrer l'utilisateur dans la base de données
 		userRepository.save(userEntity);
 	}
@@ -47,18 +49,19 @@ public class UserService {
 	}
 
 	// Méthode pour mettre à jour les informations de l'utilisateur
-	public UserEntity updateUser(Long idUser, UserRequest userRequest) {
+	public UserEntity updateUser(Long idUser, UserUpdateRequest userUpdateRequest) {
 		// Rechercher l'utilisateur par son ID dans la base de données
 		Optional<UserEntity> optionalUser = userRepository.findByIdUser(idUser);
 		if (optionalUser.isPresent()) {
 			// Si l'utilisateur est trouvé, mettre à jour ses informations avec les données
 			// de la demande
 			UserEntity user = optionalUser.get();
-			user.setUserNom(userRequest.getUserNom());
-			user.setUserEmail(userRequest.getUserEmail());
-			user.setUserAdresse(userRequest.getUserAdresse());
-			user.setUserMotDePasse(userRequest.getUserMotDePasse());
-			user.setUserEntreprise(userRequest.getUserEntreprise());
+			user.setUserNom(userUpdateRequest.getNom());
+			user.setUserEmail(userUpdateRequest.getEmail());
+			user.setUserAdresse(userUpdateRequest.getAdresse());
+			user.setUserMotDePasse(userUpdateRequest.getMotDePasse());
+			user.setUserTelephone(userUpdateRequest.getTelephone());
+
 			// Enregistrer les modifications dans la base de données et retourner
 			// l'utilisateur mis à jour
 			return userRepository.save(user);
