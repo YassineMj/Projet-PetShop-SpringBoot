@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,6 +62,13 @@ public class AchatProduitController {
 		} else {
 			return ResponseEntity.notFound().build(); // Requête non trouvée - code 404 (NOT FOUND)
 		}
+	}
+	
+	@DeleteMapping("/delete-achat-product/{idUser}/{idProduit}")
+	public ResponseEntity<Map<String, String>> deleteAchatProduct(@PathVariable long idUser ,@PathVariable long idProduit) {
+		achatProduitService.deleteAchatProduct(idUser , idProduit);
+	    return ResponseEntity.status(HttpStatus.OK)
+	            .body(Collections.singletonMap("Message", "Achats de produits supprimés avec succès pour l'utilisateur avec l'id " + idUser));
 	}
 
 }

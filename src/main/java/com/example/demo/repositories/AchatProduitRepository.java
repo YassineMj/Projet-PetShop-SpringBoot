@@ -2,12 +2,14 @@ package com.example.demo.repositories;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.example.demo.entities.AchatProduitEntity;
+import com.example.demo.entities.UserEntity;
 
 public interface AchatProduitRepository extends JpaRepository<AchatProduitEntity, Long> {
 	@Query(value = "SELECT ap.fk_id_produit, p.image_produit, p.nom_produit, p.prix_produit, SUM(ap.quantite_produit), p.prix_produit * SUM(ap.quantite_produit) "
@@ -22,6 +24,11 @@ public interface AchatProduitRepository extends JpaRepository<AchatProduitEntity
 			+ "WHERE c.nom_categorie = :categorieproduit " + "GROUP BY ap.fk_id_produit "
 			+ "ORDER BY SUM(ap.quantite_produit) DESC LIMIT 1", nativeQuery = true)
 	String mostPopularProduct(@Param("categorieproduit") String categorieProduit);
+
+    List<AchatProduitEntity> findByUser(Optional<UserEntity> userEntity);
+
+	@Query(value = "SELECT ap.id_achat_produit FROM achat_produit_entity ap where ap.fk_id_user=:idUser ", nativeQuery = true)
+	List<String> findAllByIdUser(@Param("idUser") long idUser);
 
 
 }

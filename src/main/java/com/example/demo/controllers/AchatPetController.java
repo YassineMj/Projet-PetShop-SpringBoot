@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,6 +80,13 @@ public class AchatPetController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No popular pet found");
         }
+    }
+    
+    @DeleteMapping("/delete-achat-pet/{idUser}/{idPet}")
+    public ResponseEntity<Map<String,String>> deleteAchatPet(@PathVariable long idUser , @PathVariable long idPet) {
+        achatPetService.deleteAchatPet(idUser,idPet);
+        return ResponseEntity.status(HttpStatus.CREATED)
+        		.body(Collections.singletonMap("Message","Achats supprimés avec succès pour l'utilisateur avec l'id " + idUser));
     }
 
 }

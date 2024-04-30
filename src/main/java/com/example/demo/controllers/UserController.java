@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.entities.UserEntity;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.requests.UserLoginRequest;
-import com.example.demo.requests.UserRequest;
+import com.example.demo.requests.UserSinscrireRequest;
+import com.example.demo.requests.UserUpdateRequest;
 import com.example.demo.services.UserService;
 
 import jakarta.websocket.server.PathParam;
@@ -34,13 +37,13 @@ public class UserController {
 	private UserRepository userRepository; // Injection de dépendance du repository UserRepository
 
 	@PostMapping("/sign-up-user") // Requête POST pour l'inscription d'un utilisateur
-	public ResponseEntity<Map<String, String>> singUpUser(@RequestBody UserRequest userRequest) {
+	public ResponseEntity<Map<String, String>> singUpUser(@RequestBody UserSinscrireRequest userSinscrireRequest) {
 		try {
-			if (userRepository.existsByUserEmail(userRequest.getUserEmail()) == true) {
+			if (userRepository.existsByUserEmail(userSinscrireRequest.getUserEmail()) == true) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST) // Requête invalide
 						.body(Collections.singletonMap("error", "L'e-mail existe déjà.")); // Message d'erreur : email déjà utilisé
 			}
-			userService.saveUser(userRequest); // Délégation de l'enregistrement de l'utilisateur au service UserService
+			userService.saveUser(userSinscrireRequest); // Délégation de l'enregistrement de l'utilisateur au service UserService
 			return ResponseEntity.status(HttpStatus.CREATED) // Requête traitée avec succès - code 201 (CREATED)
 					.body(Collections.singletonMap("message", "Utilisateur enregistré avec succès")); // Message de confirmation d'enregistrement
 
@@ -52,19 +55,25 @@ public class UserController {
 	}
 
 	@PostMapping("/login-user") // Requête POST pour la connexion d'un utilisateur
-	public ResponseEntity<String> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
-		if (userService.loginUser(userLoginRequest) != null) {
-			return ResponseEntity.ok("authantification reussie! "); // Requête traitée avec succès - code 200 (OK) et message de confirmation
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("authantification echoué !!!!"); // Non autorisé - code 401 (UNAUTHORIZED) et message d'erreur
-		}
+	public ResponseEntity<?> loginUser(@RequestBody UserLoginRequest userLoginRequest) {
+	    UserEntity userEntity = userService.loginUser(userLoginRequest);
+	    if (userEntity != null) {
+	        return ResponseEntity.ok(userEntity); // Utilisateur authentifié - code 200 (OK) et utilisateur retourné
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed"); // Échec de l'authentification - code 401 (UNAUTHORIZED) et message d'erreur
+	    }
 	}
 
 	@PutMapping("/update-user/{iduser}") // Requête PUT pour la mise à jour d'un utilisateur
-	public ResponseEntity<String> updateUser(@PathVariable Long iduser, @RequestBody UserRequest userRequest) {
-		userService.updateUser(iduser, userRequest); // Délégation de la mise à jour de l'utilisateur au service UserService
-		return ResponseEntity.ok("update reussie!"); // Requête traitée avec succès - code 200 (OK) et message de confirmation
+	public ResponseEntity<?> updateUser(@PathVariable Long iduser, @RequestBody UserUpdateRequest userUpdateRequest) {
+		UserEntity userEntity=  userService.updateUser(iduser, userUpdateRequest); // Délégation de la mise à jour de l'utilisateur au service UserService
+		if (userEntity != null) {
+	        return ResponseEntity.ok(userEntity); 
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed"); 
+	    }
 	}
+	
 	@GetMapping("get-count-users") // Requête GET pour récupérer le nombre de chiens
 	public ResponseEntity<Map<String, Long>> getCountUsers() {
 		// Appeler le service pour obtenir le nombre de chiens

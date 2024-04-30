@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -77,4 +78,15 @@ public class AchatPetService {
 	public String mostPopularChat() {
 		return achatPetRepository.mostPopularPet("chats"); // Récupère l'animal le plus populaire de la catégorie "chats"
 	}
+	
+	public void deleteAchatPet(long idUser , long idPet) {
+		Optional<UserEntity> userEntity = userRepository.findById(idUser);
+		
+		List<AchatPetEntity> listAchat=achatPetRepository.findByUser(userEntity);
+		for(AchatPetEntity ap :listAchat) {
+			if(ap.isStatusAchatPet() && ap.getPet().getIdPet()==idPet) {
+				achatPetRepository.delete(ap);
+			}
+		}
+    }
 }
