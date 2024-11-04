@@ -22,7 +22,7 @@ import com.example.demo.requests.AchatPetRequest;
 import com.example.demo.requests.AchatProduitRequest;
 import com.example.demo.services.AchatProduitService;
 
-@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@CrossOrigin(origins = "*") // Autorise les requêtes cross-origin depuis http://localhost:4200
 @RestController // Indique que cette classe est un contrôleur REST
 @RequestMapping("Petshop/api/achatproduit") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class AchatProduitController {

@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -25,7 +26,7 @@ import com.example.demo.services.UserService;
 
 import jakarta.websocket.server.PathParam;
 
-@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@CrossOrigin(origins = "*") // Autorise les requêtes cross-origin depuis http://localhost:4200
 @RestController // Indique que cette classe est un contrôleur REST
 @RequestMapping("Petshop/api/user") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class UserController {
@@ -86,4 +87,14 @@ public class UserController {
 		// Retourner le résultat dans ResponseEntity
 		return ResponseEntity.ok(resultMap); // Requête traitée avec succès - code 200 (OK) et résultat dans un Map
 	}
+	
+	@Autowired
+	UserRepository repositoryUser;
+    @GetMapping("/user-noms")
+    public ResponseEntity<List<String>> getAllUserNoms() {
+    	
+        List<String> userNoms = repositoryUser.findAllUserNoms();
+        return ResponseEntity.ok(userNoms);
+    }
+	
 }
