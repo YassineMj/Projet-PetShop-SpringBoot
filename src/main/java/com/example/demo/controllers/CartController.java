@@ -31,7 +31,7 @@ import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentConfirmParams;
 import com.stripe.param.PaymentIntentCreateParams;
 
-@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@CrossOrigin(origins = "*") // Autorise les requêtes cross-origin depuis http://localhost:4200
 @RestController // Indique que cette classe est un contrôleur REST
 @RequestMapping("Petshop/api/achatCart") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class CartController {

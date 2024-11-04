@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entities.PetEntity;
 import com.example.demo.services.PetService;
 
-@CrossOrigin(origins = "http://localhost:4200") // Autorise les requêtes cross-origin depuis http://localhost:4200
+@CrossOrigin(origins = "*") // Autorise les requêtes cross-origin depuis http://localhost:4200
 @RestController // Indique que cette classe est un contrôleur REST
 @RequestMapping("Petshop/api/pet") // Préfixe d'URL pour toutes les méthodes de ce contrôleur
 public class PetController {
